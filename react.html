@@ -1,25 +1,51 @@
 <!DOCTYPE html>
 <html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<body>
-    <div id="root"></div>
-</body>
-<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="text/babel">
-    const root = document.getElementById("root");
-    function App(){
-        const data= React.useState();
-        return(
-            <div>
-                <h3>Total clicks: 0</h3>
-                <button>Click me!</button>
-            </div>
-        )
-    }
+    <title>노마드코더 리액트</title>
+</head>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const root = document.getElementById("root");
     
-    ReactDOM.render(<App/>,root);
-</script>
+        function App(){
+            // React.useState 은 우리에게 배열을 하나 주는데, 첫번째 요소는 우리가 담으려는 data 값이고 두번째 요소는 data값 바꿀때 사용할 modifier이다.
+            const [counter, setCounter] = React.useState(0);
+            // 우리는 여기서 현재 counter State를 이용해서 새로운 counter state 계산해내고 있음 (setCounter로)
+            // React.useState 함수는 counter 같은 데이터를 숫자로 건네줄거고, 그데이터 값을 함수도 줄거야
+            // 그 함수 이요ㅕㅇ해서 데이터 바꿨을때 데이터 값 바뀌고 컴포넌트도 동시에 리렌더링될것
+            // modifier 값에 어떤 값을 부여하던, 이 함수는 그 값으로 업데이트하고 리렌더링 일으킬거임
+            // ** 가장 중요한건 state 바뀌면 리렌더링이 일어난다는 것.
+    
+            const onClick =() =>{
+                // setCounter(counter +1);
+                setCounter(current=>current+1);
+                // 이 함수의 첫번재 argu는 현재값. 함수의 return 값이 new state 되는 것.
+                // 만약 현재 state 기반으로 계산 하고 싶다면, 함수 이용해야함. 다음 state의 값이 현재 값 바탕으로 나올 수 있도록.
+            };
+            return(
+                // 이게 사용자가 보게 될 컴포넌트
+                //  React는 업데이트 사이사이마다, 정확히 어떤것이 업데이트 됐는지 파악해서 HTML 그 부분만 고침
+                <div>
+                    <h3>Total clicks : {counter}</h3>
+                    <button onClick={onClick}>Click Me!</button>
+                    </div>
+            );
+        }
+        
+        ReactDOM.render(<App />,root);
+    
+        //자바스크립트 배열에서 요소들 꺼내서 이름 부여할 수 있을까?
+        // const food = ["tomato","potato"]
+        // const [myFavFood,mySecondFavFood] = food;   
+    </script>
+</body>
 </html>
-
